@@ -5,8 +5,9 @@ const router=express.Router()
 // router.post('/api/auth/sendmail',sendVerificationEmail )
 // router.post('/api/auth/verifycode',verifyCode )
 
-const {createUser}=require('./controllers')
+const {createUser,authentificateUser}=require('./controllers')
 
 router.post('/api/auth/createuser',createUser)
+router.post('/api/auth/login',authentificateUser)
 
 module.exports=router
