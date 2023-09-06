@@ -48,29 +48,56 @@ const authentificateUser=async(req,res)=>{
 //     });
 // res.status(200).send('User Created',{token});
 
-    const createUser =async(req,res)=>{
-        console.log('iam in create user')
-        
-        let user = await User.findOne({where: {email: req.body.email}});
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        if (!user){
-            await User.create({
-                email:req.body.email,
-                username:req.body.username,
-                password:hashedPassword
-            })
-            const token = jwt.sign({
-                id: user.id,
-                email: user.email,
-                full_name: user.full_name,
-                phone: user.phone,
-              
-            }, jwtOptions.secretOrKey, {
-                expiresIn: 24 * 60 * 60 * 365
-            });
-            res.status(200).send({token});
-        }else{
+//     const createUser =async(req,res)=>{
+//         console.log('iam in create user')
+       
+//         let user = await User.findOne({where: {email: req.body.email}});
 
+//         const hashedPassword = await bcrypt.hash(req.body.password, 10);
+//         if (!user){
+//             await User.create({
+//                 email:req.body.email,
+//                 username:req.body.username,
+//                 password:hashedPassword
+//             })
+          
+//             const token = jwt.sign({
+//                 id: user.id,
+//                 email: user.email,
+//                 full_name: user.full_name,
+//                 phone: user.phone,
+              
+//             }, jwtOptions.secretOrKey, {
+//                 expiresIn: 24 * 60 * 60 * 365
+//             });
+//             res.status(200).send({token});
+//         }else{
+
+//         const token = jwt.sign({
+//             id: user.id,
+//             email: user.email,
+//             full_name: user.full_name,
+//             phone: user.phone,
+          
+//         }, jwtOptions.secretOrKey, {
+//             expiresIn: 24 * 60 * 60 * 365
+//         });
+//         res.status(200).send({token});
+//     }
+// }
+
+
+const createUser =async(req,res)=>{
+    console.log('iam in create user')
+    
+    let user = await User.findOne({where: {email: req.body.email}});
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    if (!user){
+        await User.create({
+            email:req.body.email,
+            username:req.body.username,
+            password:hashedPassword
+        })
         const token = jwt.sign({
             id: user.id,
             email: user.email,
@@ -81,23 +108,18 @@ const authentificateUser=async(req,res)=>{
             expiresIn: 24 * 60 * 60 * 365
         });
         res.status(200).send({token});
-    }
-            // res.status(200).send('User Created');
-           
-        
-        // res.status(200).send('User Created');
-       
-    
-    
+    }else{
 
-
-
-    
-
-//Если юзер не создался то создаем-------------------------------------------------------------------
-// if (!user) {
-//     user = await User.create({ email:req.body.email, username: undefined, password: undefined });
-//   }
-
+    const token = jwt.sign({
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        phone: user.phone,
+      
+    }, jwtOptions.secretOrKey, {
+        expiresIn: 24 * 60 * 60 * 365
+    });
+    res.status(200).send({token});
+}
 }
 module.exports={createUser,authentificateUser}

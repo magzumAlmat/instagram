@@ -8,8 +8,9 @@ cors = require('cors');
 //middleware 1----
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(logger('dev'))
-app.use(express.urlencoded())  //сериализация   на уровне экспресса для того чтобы бэк понял пост запрос 
+ //сериализация   на уровне экспресса для того чтобы бэк понял пост запрос 
 app.use(express.json())
 //app.use(upload.any())  парсинг формдаты
 

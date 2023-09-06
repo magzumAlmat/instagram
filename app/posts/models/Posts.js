@@ -15,6 +15,6 @@ const Posts = sequelize.define('Post', {
 },{
     timestamps:false,})
 
-Posts.belongsTo(User,{foreignKey:'id'})
+Posts.belongsTo(User, { foreignKey: 'creatorId' });
 
 module.exports = Posts;

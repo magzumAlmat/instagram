@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../../config/db');
 const Post = require('./Posts');
-// const Story = require('./Story')
+const Story = require('./Story')
 
 const MediaFile = sequelize.define('MediaFile', {
   link: {
@@ -11,6 +11,6 @@ const MediaFile = sequelize.define('MediaFile', {
 });
 
 MediaFile.belongsTo(Post, {foreignKey: 'postId'});
-// MediaFile.belongsTo(Story, {foreignKey: 'storyId'});
+MediaFile.belongsTo(Story, {foreignKey: 'storyId'});
 
 module.exports = MediaFile;

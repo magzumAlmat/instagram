@@ -1,34 +1,39 @@
 const Post = require('./models/Posts')
 
-const jwt = require("jsonwebtoken");
 
-const jwtOptions = {
-    secretOrKey: "11111"
-};
 const MediaFile = require('./models/MediaFile');
+const Story = require('./models/Story')
+const Commentary = require('./models/Commentary');
+const User = require('../auth/User');
+// const { Op } = require('sequelize');
+// const fs = require('fs');
+//const path = require('path');
 
 const createPost = async (req, res) => {
     console.log('iam in create post', req.user.id)
 
-    try {
-        await Post.create({
-            userId: req.user.id,
-            image: req.body.image,
-            description: req.body.description,
-            profile_picture_url: req.body.profile_picture_url,
-            image_url: req.body.image_url
-
+ 
+    if (!req.user || !req.user.id) {
+      return res.status(400).json({ error: 'User ID is missing or invalid.' });
+    }
+    // try {
+        const post = await Post.create({
+          creatorId: req.user.id,
+          description: req.body.description,
         });
         await MediaFile.create({
-            postId: post.id,
-            link: '/content/' + req.file.filename
+          postId: post.id,
+          link: '/content/' + req.file.filename
         });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({error: 'Failed to create post'});
-    }
-    res.status(201).json(post);
-    res.status(200).send('Post Created');
+    
+        res.status(201).json(post);
+      
+      // } catch (error) {
+      //   console.error(error);
+      //   res.status(500).json({ error: 'Failed to create post' });
+      // }
+    
+    // res.status(200).send('Post Created');
 
 }
 // const getMyPosts = async (req, res) => {
