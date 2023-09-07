@@ -29,6 +29,10 @@ app.use(require('./app/auth/routes'))
 
 app.use(require('./app/posts/routes'))
 
+app.use(require('./app/like/routes'))
+app.use(require('./app/followers/routes'))
+app.use(require('./app/region/routes'))
+
 
 
 app.listen (3001,()=>{
