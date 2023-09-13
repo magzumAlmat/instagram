@@ -91,6 +91,7 @@ const createUser =async(req,res)=>{
     console.log('iam in create user')
     
     let user = await User.findOne({where: {email: req.body.email}});
+    console.log(user)
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     if (!user){
         await User.create({
