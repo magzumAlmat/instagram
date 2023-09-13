@@ -16,7 +16,7 @@ module.exports={
         port:25060,
         dialectOptions: {
             ssl: {
-              ca: fs.readFileSync('config/ca-certificate.crt')
+              ca: fs.readFileSync('config/aa.crt')
             },
         },
     }
