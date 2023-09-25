@@ -18,6 +18,7 @@ const validatePost = (req, res, next) => {
     res.status(500).send(error)
   }
 }
+
 const validateStory = (req, res, next) => {
   try {
     let errors = {};
