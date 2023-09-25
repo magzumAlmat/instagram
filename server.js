@@ -35,7 +35,7 @@ app.use(require('./app/region/routes'))
 
 
 
-app.listen (3002,()=>{
+app.listen (3004,()=>{
     console.log('Server is listening on port 3002')
 })
 
