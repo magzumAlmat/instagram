@@ -4,7 +4,7 @@ const logger=require('morgan') // для логирования кто к нам
 const multer=require('multer') // для formdata
 
 const passport=require('./app/auth/passport')
-cors = require('cors');
+const cors = require('cors');
 //middleware 1----
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
