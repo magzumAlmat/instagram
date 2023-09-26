@@ -38,7 +38,7 @@ app.use(require('./app/region/routes'))
 
 
 app.use(express.static('public'));
-app.use('/public', express.static('public'));
+app.use('/public/content', express.static('content'));
 
 app.listen (3002,()=>{
     console.log('Server is listening on port 3002')
