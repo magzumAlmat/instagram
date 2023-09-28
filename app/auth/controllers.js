@@ -100,4 +100,10 @@ const createUser = async (req, res) => {
     }
 }
 
-module.exports={createUser,authentificateUser}
+
+const getAllUsers=async(req,res)=>{
+    let users = await User.findAll();
+    console.log('this is user from getAllUsers',users)
+    res.status(200).send(users)
+}
+module.exports={createUser,authentificateUser,getAllUsers}
