@@ -1,6 +1,6 @@
 const Post = require('./models/Posts')
 const { Op } = require('sequelize');
-
+const Like=require('../like/Like')
 const MediaFile = require('./models/MediaFile');
 const Story = require('./models/Story')
 const Commentary = require('./models/Commentary');
@@ -55,11 +55,49 @@ const getAllPosts = async (req, res) =>{
     const allposts = await Post.findAll();
     const postIds = allposts.map(post => post.id);
     const postMedia = await MediaFile.findAll({ where: { postId: postIds } });
+    
+    const allLikes=[]
+    const likes=await Like.findAll({
+      where: {
+        postId: postIds
+      },
+    });
+
+    postIds.map(ids=>{
+      // console.log('postIDS',ids)
+      likes.map(item=>{
+        if (item.postId==ids){
+          
+          allLikes.push(item)
+        }
+      })
+    })
+   
+    const allComments=[]
+    const comments=await Commentary.findAll({
+      where: {
+        postId: postIds
+      },
+    });
+
+    postIds.map(ids=>{
+      // console.log('postIDS',ids)
+      comments.map(item=>{
+        if (item.postId==ids){
+          
+          allComments.push(item)
+        }
+      })
+    })
+    
+   
 
     const postWithMediaLinks = allposts.map(post => {
       return {
         ...post.toJSON(),
-        mediaLinks: postMedia.filter(media => media.postId === post.id).map(media => media.link)
+        mediaLinks: postMedia.filter(media => media.postId === post.id).map(media => media.link),
+        likes:allLikes.filter(it=>it.postId===post.id),
+        commentaries:allComments.filter(it=>it.postId===post.id),
       };
     });
     res.status(200).send(postWithMediaLinks)
