@@ -54,7 +54,9 @@ const getAllPosts = async (req, res) =>{
   try {
     const allposts = await Post.findAll();
     const postIds = allposts.map(post => post.id);
+    
     const postMedia = await MediaFile.findAll({ where: { postId: postIds } });
+    
     
     const allLikes=[]
     const likes=await Like.findAll({
@@ -205,7 +207,18 @@ const deleteStory = async (req, res) =>{
 const getAllUserStories = async (req, res) => {
   try {
     const userStories = await Story.findAll();
-    res.status(200).json(userStories);
+    const storyIds = userStories.map(post => post.id);
+    const storyMedia = await MediaFile.findAll({ where: { storyId: storyIds } });
+
+    const storiesWithMediaLinks = userStories.map(story => {
+      return {
+        ...story.toJSON(),
+        mediaLinks: storyMedia.filter(media => media.storyId === story.id).map(media => media.link),
+       
+      };
+    });
+    res.status(200).send(storiesWithMediaLinks)
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to get users stories' });
