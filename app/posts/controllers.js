@@ -318,5 +318,6 @@ module.exports = {
     writeCommentary,
     deleteCommentary,
     getCommentsByPostId,
-    getPostsByUsername
+    getPostsByUsername,
+    getUserStories
 }
