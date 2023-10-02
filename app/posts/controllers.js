@@ -202,6 +202,16 @@ const deleteStory = async (req, res) =>{
   }
 }
 
+const getAllUserStories = async (req, res) => {
+  try {
+    const userStories = await Story.findAll();
+    res.status(200).json(userStories);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to get users stories' });
+  }
+};
+
 const getUserStories = async (req, res) => {
   try {
     const userStories = await Story.findAll({
@@ -319,5 +329,6 @@ module.exports = {
     deleteCommentary,
     getCommentsByPostId,
     getPostsByUsername,
-    getUserStories
+    getUserStories,
+    getAllUserStories
 }

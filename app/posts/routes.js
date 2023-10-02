@@ -7,7 +7,7 @@ const { Op } = require('sequelize');
 const passport =require('passport')
 const path = require('path');
 const {upload} = require('./utils')
-const {getUserStories, createPost,getMyPosts,getAllPosts,getPost, deletePost, editPost, createStory, deleteStory, getUserStories, writeCommentary, deleteCommentary, getCommentsByPostId, getPostsByUsername} = require('./controllers')
+const {getAllUserStories, createPost,getMyPosts,getAllPosts,getPost, deletePost, editPost, createStory, deleteStory, getUserStories, writeCommentary, deleteCommentary, getCommentsByPostId, getPostsByUsername} = require('./controllers')
 const {validatePost, validateStory, isPostAuthor, isStoryAuthor, isPostOrCommentAuthor} = require('./models/middlewares')
 
 router.post('/api/createpost',passport.authenticate('jwt', {session: false}),upload.single('post_media'),createPost)
@@ -17,7 +17,7 @@ router.get('/api/post/:id', passport.authenticate('jwt', {session: false}), getP
 router.delete('/api/post/:id', passport.authenticate('jwt', {session: false}), isPostAuthor, deletePost)
 router.put('/api/post/:id', passport.authenticate('jwt', {session: false}), upload.single('post_media'), isPostAuthor, validatePost, editPost)
 router.post('/api/story', passport.authenticate('jwt', {session: false}), upload.single('story_media'),  createStory)
-router.get('/api/story', passport.authenticate('jwt', {session: false}),  getUserStories)
+router.get('/api/story', passport.authenticate('jwt', {session: false}),  getAllUserStories)
 
 router.delete('/api/story/:id', passport.authenticate('jwt', {session: false}), isStoryAuthor, deleteStory)
 router.get('/api/story/user/:id', passport.authenticate('jwt', {session: false}), getUserStories)
