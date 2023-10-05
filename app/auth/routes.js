@@ -9,6 +9,6 @@ const passport = require('passport');
 const {createUser,authentificateUser,getAllUsers}=require('./controllers')
 
 router.post('/api/auth/createuser',createUser)
-router.post('/api/auth/login',passport.authenticate('jwt', {session: false}),authentificateUser)
+router.post('/api/auth/login',authentificateUser)
 router.get('/api/getallusers',passport.authenticate('jwt', {session: false}),getAllUsers)
 module.exports=router
