@@ -21,6 +21,8 @@ const authentificateUser=async(req,res)=>{
         email: user.email,
         full_name: user.full_name,
         phone: user.phone,
+        password:user.password,
+        username: user.username,
     }, jwtOptions.secretOrKey, {
         expiresIn: 24 * 60 * 60 * 365
     });
