@@ -16,7 +16,15 @@ const authentificateUser=async(req,res)=>{
     if (!isPasswordValid) {
       return res.status(401).json({ error: 'Invalid email or password' });
     }
-    res.status(200).json({ prompt: 'Authorization successful' });
+    const token = jwt.sign({
+        id: user.id,
+        email: user.email,
+        full_name: user.full_name,
+        phone: user.phone,
+    }, jwtOptions.secretOrKey, {
+        expiresIn: 24 * 60 * 60 * 365
+    });
+    res.status(200).json({ prompt: 'Authorization successful' ,token});
 
 }
 
