@@ -22,6 +22,7 @@ const createPost = async (req, res) => {
         const post = await Post.create({
           creatorId: req.user.id,
           description: req.body.description,
+          username:req.body.username,
         });
         await MediaFile.create({
           postId: post.id,
