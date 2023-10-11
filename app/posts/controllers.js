@@ -14,7 +14,7 @@ const path = require('path');
 const createPost = async (req, res) => {
     console.log('iam in create post', req.user.id)
 
- 
+  
     if (!req.user || !req.user.id) {
       return res.status(400).json({ error: 'User ID is missing or invalid.' });
     }
@@ -38,10 +38,29 @@ const getMyPosts = async (req, res) => {
     const postIds = myPosts.map(post => post.id);
     const postMedia = await MediaFile.findAll({ where: { postId: postIds } });
 
+    const allComments=[]
+    const comments=await Commentary.findAll({
+      where: {
+        postId: postIds
+      },
+    });
+
+    postIds.map(ids=>{
+      // console.log('postIDS',ids)
+      comments.map(item=>{
+        if (item.postId==ids){
+          
+          allComments.push(item)
+        }
+      })
+    })
+    
+
     const postWithMediaLinks = myPosts.map(post => {
       return {
         ...post.toJSON(),
-        mediaLinks: postMedia.filter(media => media.postId === post.id).map(media => media.link)
+        mediaLinks: postMedia.filter(media => media.postId === post.id).map(media => media.link),
+        commentaries:allComments.filter(it=>it.postId===post.id),
       };
     });
     res.status(200).send(postWithMediaLinks);
@@ -50,6 +69,7 @@ const getMyPosts = async (req, res) => {
     res.status(500).json({ error: 'Failed to get posts' });
   }
 };
+
 
 const getAllPosts = async (req, res) =>{
   try {
